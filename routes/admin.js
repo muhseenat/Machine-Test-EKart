@@ -35,8 +35,43 @@ router.post('/create/product', (req, res) => {
 //UPDATE PRODUCT DETAILS
 router.get('/edit/product/:id', (req, res) => {
   productHelper.getSingleProduct(req.params.id).then((product)=>{
-
     res.render('admin/editProduct',{product})
+  }).catch((err)=>{
+    res.send(err)
+  })
+})
+
+router.post('/update/product/:id', (req, res) => {
+  let reqimge1 
+  let reqimge2
+  let reqimge3
+  let reqimge4
+  if(req.files){
+   reqimge1 = req.files.image1
+   reqimge2 = req.files.image2
+   reqimge3 = req.files.image3
+   reqimge4 = req.files.image4
+  }
+  const {id}=req.params
+  productHelper.updateProduct(id,req.body).then((result)=>{
+    if(reqimge1){
+      let image1 = `./public/image/${id}-1.jpg`
+      reqimge1.mv(image1)
+    }
+    if(reqimge2){
+      let image2 = `./public/image/${id}-2.jpg`
+      reqimge2.mv(image2)
+    }
+    if(reqimge3){
+      let image3 = `./public/image/${id}-3.jpg`
+      reqimge3.mv(image3)
+     
+    }
+    if(reqimge4){
+      let image4 = `./public/image/${id}-4.jpg`
+      reqimge4.mv(image4)
+    }
+    res.redirect("/admin")
   }).catch((err)=>{
     res.send(err)
   })
@@ -44,7 +79,12 @@ router.get('/edit/product/:id', (req, res) => {
 
 //DELETE PRODUCT
 router.delete('/delete/product/:id', (req, res) => {
-  res.render('admin/index')
+  const {id}= req.params
+  productHelper.deleteProduct(id).then(()=>{
+    res.json(true)
+  }).catch((err)=>{
+    console.log(err)
+  })
 })
 
 module.exports = router;

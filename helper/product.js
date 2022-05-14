@@ -31,5 +31,23 @@ module.exports={
                 reject(err)
             })
         })
+    },
+    updateProduct:(id,data)=>{
+        return new Promise((resolve,reject)=>{
+            Product.updateOne({_id:id},{...data}).then((result)=>{
+                resolve(result)
+            }).catch((err)=>{
+                console.log(err)
+                reject(err)
+            })
+        })
+    },
+    deleteProduct:(id)=>{
+        return new Promise ((resolve,reject)=>{
+            Product.deleteOne({_id:id}).then((result)=>{
+                console.log(result,"dffffffffffffffffffffffffff")
+                resolve(result)
+            }).catch(err=>reject(err))
+        })
     }
 }

@@ -6,7 +6,7 @@
 
       </div>
     </div>
-    
+    <% if (products.length  >0){ %>
     <table class="table mt-5">
       <thead>
         <tr>
@@ -28,7 +28,7 @@
           <td><%=item.price%></td>
           <td>
             <a href="/admin/edit/product/<%=item._id%>" class="btn btn-primary text-white">Edit</a>
-            <button href="/admin/delete/product/<%=item._id%>" class="btn btn-outline-danger">Delete</button>
+            <button onclick="deleteProduct('/admin/delete/product/<%=item._id%>')" class="btn btn-outline-danger">Delete</button>
           </td>
 
 
@@ -38,4 +38,18 @@
         
       </tbody>
     </table>
+    <%} else {%>
+      <h3 class="mt-5">No Data</h3>
+      <% } %>
+
+    <script>
+      function deleteProduct(url){
+        if(confirm('Are you sure?'))
+        fetch(url,{method:'DELETE'}).then((res)=>{
+          window.location="/admin"
+        }).catch(err=>{
+          console.log(err)
+        })
+      }
+    </script>
     <%- include('../partials/footer'); %>
