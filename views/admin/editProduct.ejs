@@ -1,0 +1,63 @@
+<%- include('../partials/header'); %>
+
+
+<div class="container">
+  <div class="mb-5">
+    <h2 >Edit Product</h2>
+  </div>
+    <div>
+        <form action="/admin/create/product" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="productname">Product Name</label>
+              <input type="text" class="form-control" name="name" id="productname" aria-describedby="emailHelp"  value="<%=product.name%>" placeholder="Enter Product Name" required>
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="text" class="form-control"  name="price"  value="<%=product.price%>" placeholder="Price" required>
+            </div>
+            <div class="form-group">
+              <label for="price">Discount</label>
+              <input type="text" class="form-control"  name="discount"  value="<%=product.discount%>" placeholder="Discount" required>
+            </div>
+            <div class="form-group">
+              <label for="price">Shipping Charge</label>
+              <input type="text" class="form-control"  name="shippingCharge" placeholder="Shipping Charge"   value="<%=product.shippingCharge%>"required>
+            </div>
+            <div class="d-flex align-items-center justify-content-between p-4">
+              <img style="width:150px; height:150px; object-fit: contain;" src="/image/<%=product._id%>-1.jpg"  onclick="selectImage(1)"  id="image1" alt="image1">
+              <img style="width:150px; height:150px; object-fit: contain" src="/image/<%=product._id%>-2.jpg" onclick="selectImage(2)"    id="image2" alt="image2">
+              <img style="width:150px; height:150px; object-fit: contain" src="/image/<%=product._id%>-3.jpg"  onclick="selectImage(3)"   id="image3" alt="image3">
+              <img style="width:150px; height:150px; object-fit: contain" src="/image/<%=product._id%>-4.jpg" onclick="selectImage(4)"  id="image4" alt="image1">
+            </div>
+            <div >
+              <input type="file"   name="image1" id="imageinput1" onchange="setImage(1)" required  hidden>
+              <input type="file"   name="image2" id="imageinput2" onchange="setImage(2)"  required hidden >
+              <input type="file"   name="image3" id="imageinput3"  onchange="setImage(3)" required hidden>
+              <input type="file"  name="image4" id="imageinput4" onchange="setImage(4)"  required hidden>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+</div>
+
+<script>
+  function selectImage(id){
+    // console.log(document.getElementById("imageinput"+id).files)
+    const input = document.getElementById("imageinput"+id) 
+    input.click()
+  }
+
+  function setImage(id){
+    const selectedFile = document.getElementById("imageinput"+id).files[0]
+     
+    const imgtag = document.getElementById("image"+id) 
+    var reader = new FileReader()
+    reader.onload = function(event) {
+    imgtag.src = event.target.result;
+  };
+
+  reader.readAsDataURL(selectedFile);
+  }
+</script>
+
+<%- include('../partials/footer'); %>
