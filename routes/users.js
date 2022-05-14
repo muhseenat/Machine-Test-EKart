@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
-
+const productHelper = require("../helper/product")
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+    productHelper.getAllProduct().then((products)=>{
+      res.render("user/index",{products})
+    })
 });
 
 module.exports = router;
